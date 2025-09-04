@@ -22,18 +22,29 @@ end
 
 local plugin_specs = {
   -- auto-completion engine
-  { "hrsh7th/cmp-nvim-lsp", lazy = true },
-  { "hrsh7th/cmp-path", lazy = true },
-  { "hrsh7th/cmp-buffer", lazy = true },
-  { "hrsh7th/cmp-omni", lazy = true },
-  { "hrsh7th/cmp-cmdline", lazy = true },
-  { "quangnguyen30192/cmp-nvim-ultisnips", lazy = true },
   {
     "hrsh7th/nvim-cmp",
-    name = "nvim-cmp",
-    event = "VeryLazy",
+    lazy = false,
+    priority = 100,
+    dependencies = {
+      "onsails/lspkind.nvim",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-buffer",
+      { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
+      "saadparwaiz1/cmp_luasnip",
+      "roobert/tailwindcss-colorizer-cmp.nvim",
+      {
+        "supermaven-inc/supermaven-nvim",
+        config = function()
+          require("supermaven-nvim").setup {
+            -- disable_inline_completion = true,
+          }
+        end,
+      },
+    },
     config = function()
-      require("config.nvim-cmp")
+      require "custom.completion"
     end,
   },
   -- {
@@ -51,6 +62,12 @@ local plugin_specs = {
     "neovim/nvim-lspconfig",
     config = function()
       require("config.lsp")
+    end,
+  },
+  {
+    "nvimtools/none-ls.nvim",
+    config = function()
+      require("config.none-ls")
     end,
   },
   {
@@ -179,6 +196,46 @@ local plugin_specs = {
   { "zootedb0t/citruszest.nvim", priority = 1000 },
   { "tanvirtin/monokai.nvim", lazy = true },
 
+  { -- ... this file is filled with pain
+    lazy = false,
+    priority = 1000,
+    dir = "~/plugins/colorbuddy.nvim",
+    config = function()
+      vim.cmd.colorscheme "gruvbuddy"
+    end,
+  },
+  "rktjmp/lush.nvim",
+  "tckmn/hotdog.vim",
+  "dundargoc/fakedonalds.nvim",
+  "craftzdog/solarized-osaka.nvim",
+  { "rose-pine/neovim", name = "rose-pine" },
+  "eldritch-theme/eldritch.nvim",
+  "jesseleite/nvim-noirbuddy",
+  "miikanissi/modus-themes.nvim",
+  "rebelot/kanagawa.nvim",
+  "gremble0/yellowbeans.nvim",
+  "rockyzhang24/arctic.nvim",
+  "folke/tokyonight.nvim",
+  "Shatur/neovim-ayu",
+  "RRethy/base16-nvim",
+  "xero/miasma.nvim",
+  "cocopon/iceberg.vim",
+  "kepano/flexoki-neovim",
+  "ntk148v/komau.vim",
+  { "catppuccin/nvim", name = "catppuccin" },
+  "uloco/bluloco.nvim",
+  "LuRsT/austere.vim",
+  "ricardoraposo/gruvbox-minor.nvim",
+  "NTBBloodbath/sweetie.nvim",
+  "vim-scripts/MountainDew.vim",
+  {
+    "maxmx03/fluoromachine.nvim",
+    -- config = function()
+    --   local fm = require "fluoromachine"
+    --   fm.setup { glow = true, theme = "fluoromachine" }
+    -- end,
+  },
+
   -- plugins to provide nerdfont icons
   {
     "echasnovski/mini.icons",
@@ -294,13 +351,7 @@ local plugin_specs = {
   },
 
   -- Snippet engine and snippet template
-  {
-    "SirVer/ultisnips",
-    dependencies = {
-      "honza/vim-snippets",
-    },
-    event = "InsertEnter",
-  },
+  
 
   -- Automatic insertion and deletion of a pair of characters
   {
@@ -732,7 +783,10 @@ local plugin_specs = {
   { 'wakatime/vim-wakatime', lazy = false },
   {
     'williamboman/mason.nvim',
-    build = ':MasonUpdate',
+    dependencies = { "williamboman/mason-lspconfig.nvim" },
+    config = function()
+      require("config.mason")
+    end,
   },
   {
     'jay-babu/mason-nvim-dap.nvim',
@@ -747,6 +801,41 @@ local plugin_specs = {
       'mfussenegger/nvim-dap',
       'nvim-neotest/nvim-nio',
     },
+  },
+
+  {
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup {
+        window = {
+          backdrop = 1,
+          height = 0.9,
+          width = 0.8,
+          options = {
+            number = false,
+            relativenumber = false,
+            signcolumn = "no",
+            list = false,
+            cursorline = false,
+          },
+        },
+      }
+
+      require("twilight").setup {
+        context = -1,
+        treesitter = true,
+      }
+    end,
+  },
+
+  {
+    "folke/twilight.nvim",
+    config = function()
+      require("twilight").setup {
+        context = -1,
+        treesitter = true,
+      }
+    end,
   },
 }
 

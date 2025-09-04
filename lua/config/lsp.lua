@@ -106,43 +106,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
   desc = "Configure buffer keymap and behavior based on LSP",
 })
 
--- Enable lsp servers when they are available
 
-local capabilities = require("lsp_utils").get_default_capabilities()
-
-vim.lsp.config("*", {
-  capabilities = capabilities,
-  flags = {
-    debounce_text_changes = 500,
-  },
-})
-
--- A mapping from lsp server name to the executable name
-local enabled_lsp_servers = {
-  pyright = "delance-langserver",
-  ruff = "ruff",
-  lua_ls = "lua-language-server",
-  -- ltex = "ltex-ls",
-  clangd = "clangd",
-  jdtls = "jdtls",
-  vimls = "vim-language-server",
-  bashls = "bash-language-server",
-  yamlls = "yaml-language-server",
-}
-
-for server_name, lsp_executable in pairs(enabled_lsp_servers) do
-  if utils.executable(lsp_executable) then
-    vim.lsp.enable(server_name)
-  else
-    local msg = string.format(
-      "Executable '%s' for server '%s' not found! Server will not be enabled",
-      lsp_executable,
-      server_name
-    )
-    vim.notify(msg, vim.log.levels.WARN, { title = "Nvim-config" })
-  end
-end
-
-if utils.executable("jdtls") then
-  require('lspconfig').jdtls.setup({})
-end
