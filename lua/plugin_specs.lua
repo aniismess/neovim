@@ -502,6 +502,20 @@ local plugin_specs = {
     ft = { "tmux" },
   },
 
+  -- Seamless navigation between tmux and nvim
+  {
+    "christoomey/vim-tmux-navigator",
+    enabled = function()
+      return utils.executable("tmux")
+    end,
+    keys = {
+      { "<c-h>", "<cmd>TmuxNavigateLeft<cr>" },
+      { "<c-j>", "<cmd>TmuxNavigateDown<cr>" },
+      { "<c-k>", "<cmd>TmuxNavigateUp<cr>" },
+      { "<c-l>", "<cmd>TmuxNavigateRight<cr>" },
+    },
+  },
+
   -- Modern matchit implementation
   { "andymass/vim-matchup", event = "BufRead" },
   { "tpope/vim-scriptease", cmd = { "Scriptnames", "Messages", "Verbose" } },

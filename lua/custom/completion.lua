@@ -40,10 +40,10 @@ cmp.setup {
       -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
       group_index = 0,
     },
-    { name = "supermaven" },
     { name = "nvim_lsp" },
     { name = "path" },
     { name = "buffer" },
+    { name = "supermaven" },
   },
   mapping = {
     ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
