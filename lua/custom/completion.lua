@@ -44,6 +44,7 @@ cmp.setup {
     { name = "path" },
     { name = "buffer" },
     { name = "supermaven" },
+    
   },
   mapping = {
     ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
@@ -109,4 +110,23 @@ cmp.setup.filetype({ "sql" }, {
     { name = "vim-dadbod-completion" },
     { name = "buffer" },
   },
+})
+
+require("cmp_cmdline")
+
+cmp.setup.cmdline("/", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "buffer" },
+  },
+})
+
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = "path" },
+  }, {
+    { name = "cmdline" },
+  }),
+  matching = { disallow_symbol_nonprefix_matching = false },
 })

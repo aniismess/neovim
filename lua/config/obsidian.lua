@@ -1,0 +1,1 @@
+-- Additional configuration for obsidian.nvim can go here.

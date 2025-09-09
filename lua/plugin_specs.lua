@@ -31,6 +31,7 @@ local plugin_specs = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-cmdline",
       { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
       "saadparwaiz1/cmp_luasnip",
       "roobert/tailwindcss-colorizer-cmp.nvim",
@@ -46,6 +47,18 @@ local plugin_specs = {
     config = function()
       require "custom.completion"
     end,
+  },
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {
+      settings = {
+        jsx_close_tag = {
+          enable = true,
+          filetypes = { "javascriptreact", "typescriptreact" },
+        },
+      },
+    },
   },
   -- {
   --   "saghen/blink.cmp",
@@ -165,6 +178,27 @@ local plugin_specs = {
       vim.g.markdown_enable_conceal = 1
     end,
     ft = { "markdown" },
+  },
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*", -- recommended, use latest release instead of latest commit
+    lazy = true,
+    event = {
+      "BufReadPre /home/ani/notes/**.md",
+      "BufNewFile /home/ani/notes/**.md",
+    },
+    dependencies = {
+      -- Required.
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {
+      workspaces = {
+        {
+          name = "notes",
+          path = "/home/ani/notes",
+        },
+      },
+    },
   },
   
   -- A list of colorscheme plugin you may want to try. Find what suits you.
@@ -850,6 +884,10 @@ local plugin_specs = {
         treesitter = true,
       }
     end,
+  },
+  {
+    "ThePrimeagen/vim-be-good",
+    cmd = "VimBeGood",
   },
 }
 
